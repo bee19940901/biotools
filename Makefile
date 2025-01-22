@@ -4,9 +4,9 @@ LDFLAGS = -lz
 
 SRC_DIR = src
 OBJ_DIR = build
-OBJ = $(OBJ_DIR)/main.o $(OBJ_DIR)/fastq_processing.o
+OBJ = $(OBJ_DIR)/main.o $(OBJ_DIR)/cut_fastq.o
 
-TARGET = beetools
+TARGET = biotools
 
 # 编译目标
 $(TARGET): $(OBJ)
@@ -17,8 +17,8 @@ $(OBJ_DIR)/main.o: $(SRC_DIR)/main.c
 	$(CC) $(CFLAGS) -c $(SRC_DIR)/main.c -o $(OBJ_DIR)/main.o
 
 # 编译 fastq_processing.o
-$(OBJ_DIR)/fastq_processing.o: $(SRC_DIR)/fastq_processing.c
-	$(CC) $(CFLAGS) -c $(SRC_DIR)/fastq_processing.c -o $(OBJ_DIR)/fastq_processing.o
+$(OBJ_DIR)/cut_fastq.o: $(SRC_DIR)/cut_fastq.c
+	$(CC) $(CFLAGS) -c $(SRC_DIR)/cut_fastq.c -o $(OBJ_DIR)/cut_fastq.o
 
 # 清理
 clean:
