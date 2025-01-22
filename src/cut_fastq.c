@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <getopt.h>  // 需要添加头文件支持 getopt_long
+#include <getopt.h>
+#include "../include/cut_fastq.h"
 
 #define MAX_LINE_LENGTH 1000
 
@@ -14,28 +15,8 @@ int read_line(FILE *file, char *line, int max_length) {
     return 0;
 }
 
-// 处理 fastq 文件
-void process_fastq(FILE *in_file, FILE *out_file, int cutoff) {
-    char line[MAX_LINE_LENGTH];
-    while (1) {
-        if (!read_line(in_file, line, MAX_LINE_LENGTH)) break;
-        fprintf(out_file, "%s\n", line);  // 输出第一行
-
-        if (!read_line(in_file, line, MAX_LINE_LENGTH)) break;
-        line[cutoff] = '\0';  // 截断第二行
-        fprintf(out_file, "%s\n", line);
-
-        if (!read_line(in_file, line, MAX_LINE_LENGTH)) break;
-        fprintf(out_file, "%s\n", line);  // 输出第三行
-
-        if (!read_line(in_file, line, MAX_LINE_LENGTH)) break;
-        line[cutoff] = '\0';  // 截断第四行
-        fprintf(out_file, "%s\n", line);
-    }
-}
-
 // 主函数，解析命令行参数
-void split_fastq(int argc, char *argv[]) {
+void cut_fastq(int argc, char *argv[]) {
     int cutoff = 50;
     char *in_file_path = NULL;
     char *out_file_path = NULL;
@@ -83,7 +64,22 @@ void split_fastq(int argc, char *argv[]) {
         return;
     }
 
-    process_fastq(in_file, out_file, cutoff);
+    char line[MAX_LINE_LENGTH];
+    while (1) {
+        if (!read_line(in_file, line, MAX_LINE_LENGTH)) break;
+        fprintf(out_file, "%s\n", line);  // 输出第一行
+
+        if (!read_line(in_file, line, MAX_LINE_LENGTH)) break;
+        line[cutoff] = '\0';  // 截断第二行
+        fprintf(out_file, "%s\n", line);
+
+        if (!read_line(in_file, line, MAX_LINE_LENGTH)) break;
+        fprintf(out_file, "%s\n", line);  // 输出第三行
+
+        if (!read_line(in_file, line, MAX_LINE_LENGTH)) break;
+        line[cutoff] = '\0';  // 截断第四行
+        fprintf(out_file, "%s\n", line);
+    }
 
     fclose(in_file);
     fclose(out_file);
