@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "include/cut_fastq.h"
+#include "../include/cut_fastq.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
